@@ -1,5 +1,5 @@
 import React from 'react';
-import Canvas from "../objects/Canvas";
+import Canvas from "../classes/Canvas";
 
 const CanvasComponent = () => {
 

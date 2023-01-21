@@ -8,7 +8,7 @@ import "./styles/App.css";
 
 const App = () => {
   return (
-    <div>
+    <div id="main-container">
       <div className="container-flex-horizontal" id="main-container">
         <ShapeContainer />
         <CanvasContainer />
