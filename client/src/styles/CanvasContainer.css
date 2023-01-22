@@ -2,5 +2,9 @@
 
 #canvasContainer {
     width: 100%;
+    border: 1px solid black;
+    position: relative; /* relative so inside div 
+    can have absolute positioning relative to this container */
 }
+
 

@@ -3,6 +3,7 @@ class Canvas {
 
     #width;
     #height;
+    #defaultCanvasRatio = 8.5/11
 
     constructor(width, height) {
         this.#width = width;

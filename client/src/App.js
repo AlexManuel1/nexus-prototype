@@ -1,5 +1,5 @@
-import CanvasContainer from "./components/CanvasContainer";
-import ShapeContainer from "./components/ShapeContainer";
+import CanvasContainer from "./view/CanvasContainer";
+import ShapeContainer from "./view/ShapeContainer";
 
 // css imports
 import "./styles/Container.css";
