@@ -1,31 +1,53 @@
-import React, { useState, useEffect, useRef } from 'react';
-import canvas from "../model/Canvas";
-import CanvasComponent from './CanvasComponent';
+import React, { useEffect, useContext, useState } from 'react';
+import canvas from "../model/Canvas"; // import class
+import SelectionContext from '../controller/contexts/SelectionContext'; // context imports
 
 // css imports
-import '../styles/CanvasContainer.css';
+import './styles/CanvasContainer.css';
 
 const CanvasContainer = () => {
 
-    let [width, setWidth] = useState();
-    let [height, setHeight] = useState();
-    const canvasRef = useRef(null);
+    const { selectionTool } = useContext(SelectionContext);
+    const [canvasElements, setCanvasElements] = useState([]);
 
     useEffect(() => {
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext("2d");
-        console.log(ctx);
-        ctx.strokeRect(10, 10, 200, 100);
-        ctx.strokeText("hello world", 50, 50, 500);
-        //const canvas = document.getElementById("canvas");
-        //const ctx = canvas.getContext("2d");
+        console.log(selectionTool)
+    }, [selectionTool])
 
-        
-    }, [])
+    // make sure click is within div
+
+    const createRectangle = (e) => {
+        console.log("canvas onclick: ", e);
+
+        const x = e.nativeEvent.offsetX;
+        const y = e.nativeEvent.offsetY;
+
+        setCanvasElements([
+            ...canvasElements,
+            <svg
+                x={x + "px"}
+                y={y + "px"}
+                width="100"
+                height="100"
+                viewBox='0 0 100 100'
+                key={"rect " + e.timeStamp}
+            >
+                <rect width="100%" height="100%"/>
+            </svg>
+        ]);
+    }
 
     return (
         <div id='canvasContainer'>
-            <canvas id="canvas" ref={canvasRef}></canvas>
+            <svg
+                id="rootSvg"
+                xmlns="http://www.w3.org/2000/svg"
+                width="100%"
+                height="100%"
+                onClick={(e) => createRectangle(e)}
+            >
+                {canvasElements}
+            </svg>
         </div>
     );
 };
