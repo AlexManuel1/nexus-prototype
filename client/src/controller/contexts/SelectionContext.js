@@ -7,7 +7,7 @@ export const SelectionContextProvider = ({ children }) => {
 
     const value = {
         selectionTool,
-        setSelectionTool
+        setSelectionTool,
     };
 
     return (

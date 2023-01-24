@@ -1,40 +1,33 @@
 import React, { useEffect, useContext, useState } from 'react';
-import canvas from "../model/Canvas"; // import class
+import Canvas from "../model/Canvas"; // import class
 import SelectionContext from '../controller/contexts/SelectionContext'; // context imports
+import CanvasContext from '../controller/contexts/CanvasContext'; // context imports
+import { v4 } from 'uuid';
 
 // css imports
 import './styles/CanvasContainer.css';
 
 const CanvasContainer = () => {
 
+    const canvas = new Canvas(100, 200);
     const { selectionTool } = useContext(SelectionContext);
-    const [canvasElements, setCanvasElements] = useState([]);
+    const { selectedElement, setSelectedElement, canvasElements, setCanvasElements } = useContext(CanvasContext);
 
     useEffect(() => {
-        console.log(selectionTool)
+        console.log("selectionTool: ", selectionTool);
+        console.log("selectedElement: ", selectedElement);
     }, [selectionTool])
 
-    // make sure click is within div
-
-    const createRectangle = (e) => {
-        console.log("canvas onclick: ", e);
-
-        const x = e.nativeEvent.offsetX;
-        const y = e.nativeEvent.offsetY;
-
-        setCanvasElements([
-            ...canvasElements,
-            <svg
-                x={x + "px"}
-                y={y + "px"}
-                width="100"
-                height="100"
-                viewBox='0 0 100 100'
-                key={"rect " + e.timeStamp}
-            >
-                <rect width="100%" height="100%"/>
-            </svg>
-        ]);
+    // create element
+    const createElement = (e) => {
+        if (selectionTool === "cursor") {
+            setSelectedElement("canvas");
+        } else {
+            const x = e.nativeEvent.offsetX;
+            const y = e.nativeEvent.offsetY;
+            const element = canvas.createElement(v4(), x, y, 100, 100, selectionTool)
+            setCanvasElements([...canvasElements, element]);
+        }
     }
 
     return (
@@ -44,7 +37,7 @@ const CanvasContainer = () => {
                 xmlns="http://www.w3.org/2000/svg"
                 width="100%"
                 height="100%"
-                onClick={(e) => createRectangle(e)}
+                onClick={(e) => createElement(e)}
             >
                 {canvasElements}
             </svg>

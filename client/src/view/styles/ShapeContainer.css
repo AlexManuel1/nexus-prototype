@@ -9,6 +9,7 @@
     background-color: transparent;
     border: 1px solid transparent;
     border-radius: 5px;
+    outline: none;
     transition: border 0.2s ease-in-out;
 }
 

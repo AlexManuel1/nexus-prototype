@@ -3,6 +3,7 @@ import OptionsContainer from "./view/OptionsContainer";
 
 // context imports 
 import { SelectionContextProvider } from "./controller/contexts/SelectionContext";
+import { CanvasContextProvider } from "./controller/contexts/CanvasContext";
 
 // css imports
 import "./view/styles/Container.css";
@@ -13,8 +14,10 @@ const App = () => {
     <div id="main-container">
       <div className="container-flex-vertical" id="main-container">
         <SelectionContextProvider>
+        <CanvasContextProvider>
           <OptionsContainer />
-          <CanvasContainer />      
+          <CanvasContainer />  
+        </CanvasContextProvider> 
         </SelectionContextProvider>
       </div>
     </div>
