@@ -4,13 +4,13 @@ export const CanvasContext = createContext(null);
 
 export const CanvasContextProvider = ({ children }) => {
     const [selectedElement, setSelectedElement] = useState("canvas");
-    const [canvasElements, setCanvasElements] = useState([]);
+    const [canvasElementsData, setCanvasElementsData] = useState({});
 
     const value = {
         selectedElement,
         setSelectedElement,
-        canvasElements,
-        setCanvasElements
+        canvasElementsData,
+        setCanvasElementsData
     };
 
     return (

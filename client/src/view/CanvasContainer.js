@@ -4,30 +4,43 @@ import SelectionContext from '../controller/contexts/SelectionContext'; // conte
 import CanvasContext from '../controller/contexts/CanvasContext'; // context imports
 import { v4 } from 'uuid';
 
+// component imports
+import Rectangle from './CanvasElements/Rectangle';
+
 // css imports
 import './styles/CanvasContainer.css';
 
 const CanvasContainer = () => {
 
-    const canvas = new Canvas(100, 200);
     const { selectionTool } = useContext(SelectionContext);
-    const { selectedElement, setSelectedElement, canvasElements, setCanvasElements } = useContext(CanvasContext);
+    const { selectedElement, setSelectedElement, canvasElementsData, setCanvasElementsData } = useContext(CanvasContext);
 
     useEffect(() => {
         console.log("selectionTool: ", selectionTool);
         console.log("selectedElement: ", selectedElement);
-    }, [selectionTool])
+        console.log(canvasElementsData);
+    }, [selectionTool, canvasElementsData]);
 
     // create element
     const createElement = (e) => {
         if (selectionTool === "cursor") {
             setSelectedElement("canvas");
         } else {
+            const key = v4();
             const x = e.nativeEvent.offsetX;
             const y = e.nativeEvent.offsetY;
-            const element = canvas.createElement(v4(), x, y, 100, 100, selectionTool)
-            setCanvasElements([...canvasElements, element]);
+            const width = 200;
+            const height = 200;
+            let elementData = {
+                x, y, width, height
+            }
+            setCanvasElementsData({...canvasElementsData, [key]: elementData});
         }
+    }
+
+    //handle MouseDown
+    const handleMouseDown = (e) => {
+
     }
 
     return (
@@ -39,7 +52,17 @@ const CanvasContainer = () => {
                 height="100%"
                 onClick={(e) => createElement(e)}
             >
-                {canvasElements}
+                {Object.entries(canvasElementsData).map(([ key, value ]) => {
+                    let { x, y, width, height } = value;
+                    return (<Rectangle 
+                        x={x} y={y} width={width} height={height} key={key} 
+                        onClick={
+                            (e) => {
+                                console.log(e.target);
+                            }
+                        }
+                    />);
+                })}
             </svg>
         </div>
     );
